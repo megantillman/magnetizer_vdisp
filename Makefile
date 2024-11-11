@@ -3,7 +3,7 @@ FC=h5pfc
 srcdir=source
 builddir=build
 
-_OBJ= tsDataObj.o bessel_functions.o root_finder.o constants.o grid.o floor_field.o global_input_parameters.o surface_density.o pressureEquilibrium.o outflow.o random.o  input_parameters.o IO_hdf5.o profiles.o gutsdynamo.o ts_arrays.o  data_transfer.o output.o dynamo.o rotationCurves.o deriv.o messages.o interpolation.o integration.o seed_field.o distributor.o
+_OBJ= tsDataObj.o bessel_functions.o root_finder.o constants.o grid.o floor_field.o global_input_parameters.o surface_density.o pressureEquilibrium.o outflow.o random.o  input_parameters.o IO_hdf5.o profiles.o gutsdynamo.o ts_arrays.o  data_transfer.o output.o dynamo.o rotationCurves.o deriv.o messages.o interpolation.o integration.o seed_field.o distributor.o vel_disp.o
 OBJ = $(patsubst %,$(builddir)/%,$(_OBJ))
 
 FCFLAGS+= -lfgsl -I. -I./${srcdir}/ -J./${builddir}/ -fintrinsic-modules-path ./${builddir} -I./${builddir}/ -I/usr/include/  -fbacktrace  -ffpe-trap=zero,invalid,overflow -fbounds-check -lgsl -lgslcblas -lm
@@ -103,7 +103,7 @@ $(srcdir)/dynamo.f90: ${builddir}/output.o ${builddir}/messages.o ${builddir}/ts
 $(srcdir)/output.f90: ${builddir}/data_transfer.o ${builddir}/gutsdynamo.o ${builddir}/ts_arrays.o ${builddir}/tsDataObj.o
 $(srcdir)/IO_hdf5.f90: ${builddir}/grid.o ${builddir}/messages.o
 $(srcdir)/data_transfer.f90: ${builddir}/IO_hdf5.o
-$(srcdir)/profiles.f90: ${builddir}/surface_density.o ${builddir}/pressureEquilibrium.o ${builddir}/outflow.o ${builddir}/rotationCurves.o ${builddir}/input_parameters.o ${builddir}/grid.o
+$(srcdir)/profiles.f90: ${builddir}/surface_density.o ${builddir}/pressureEquilibrium.o ${builddir}/outflow.o ${builddir}/rotationCurves.o ${builddir}/input_parameters.o ${builddir}/grid.o ${builddir}/vel_disp.o
 $(srcdir)/Magnetizer.f90: ${builddir}/dynamo.o ${builddir}/grid.o ${builddir}/messages.o ${builddir}/distributor.o
 $(srcdir)/rotationCurves.f90: ${builddir}/bessel_functions.o ${builddir}/deriv.o
 $(srcdir)/floor_field.f90: ${builddir}/random.o ${builddir}/grid.o ${builddir}/global_input_parameters.o
@@ -114,3 +114,4 @@ $(srcdir)/FRB.f90: ${builddir}/random.o ${builddir}/surface_density.o ${builddir
 $(srcdir)/surface_density.f90: ${builddir}/constants.o ${builddir}/global_input_parameters.o
 $(srcdir)/random.f90: ${builddir}/interpolation.o ${builddir}/constants.o
 $(srcdir)/interpolation.f90: ${builddir}/global_input_parameters.o
+$(srcdir)/vel_disp.f90: ${builddir}/root_finder.o ${builddir}/grid.o
