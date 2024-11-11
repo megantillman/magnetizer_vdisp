@@ -18,6 +18,7 @@
 ! Contains the subroutines which compute initial profiles used in the dynamo calculations
 module profiles
   use grid
+  use vel_disp
   implicit none
   double precision, dimension(:), allocatable :: h, n
   double precision, dimension(:), allocatable :: l, dldr, l_kpc
@@ -123,7 +124,11 @@ contains
     Ur_kms = Ur*h0_km/h0/t0_s*t0
 
     ! TURBULENT VELOCITY PROFILE
-    v_kms = p_ISM_sound_speed_km_s * p_ISM_kappa
+    !v_kms = p_ISM_sound_speed_km_s * p_ISM_kappa
+    ! Uncomment the line above and comment the line below if you want to use a constant turbulent velocity
+    ! Using the line below calculates v self-consistently from galaxy properties
+    ! Code will still allow for user to specify a velocity through input params but that value won't actually be used
+    call calc_v_kms(Mgas_disk, r_disk, v_disk, SFR, p_ISM_sound_speed_km_s, v_kms)
     v = v_kms / h0_km * h0 * t0_s / t0
     dvdr = 0.0
 
