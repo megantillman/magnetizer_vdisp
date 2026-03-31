@@ -15,6 +15,10 @@ For more details about the physical model, we refer the reader to the original [
 [SAM]: https://ui.adsabs.harvard.edu/#abs/2006RPPh...69.3101B/
 [GLF]: https://ui.adsabs.harvard.edu/#abs/2000MNRAS.319..168C
 
+## Note about Manetizer_Vdisp
+
+This branch is a version of Magnetizer that utilizes a new module for calculating the galaxy velocity dispersion. This self-consistent calculation for velocity dispersion is based off of a semi analytic model described in Krumholz et al. 2018. There is no difference to how the user runs the code in this branch apart from not being able to define p_ISM_kappa in the global parameters input file.
+
 ## Quick install and run guide ##
 
 Galaxy Magnetizer requires the following libraries to run:
