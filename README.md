@@ -19,6 +19,8 @@ For more details about the physical model, we refer the reader to the original [
 
 This branch is a version of Magnetizer that utilizes a new module for calculating the galaxy velocity dispersion. This self-consistent calculation for velocity dispersion is based off of a semi analytic model described in Krumholz et al. 2018. There is no difference to how the user runs the code in this branch apart from not being able to define p_ISM_kappa in the global parameters input file.
 
+Inclusion of this modification to the main branch of Magnetizer is contingent on more testing to confirm the scientific validity of the results.
+
 ## Quick install and run guide ##
 
 Galaxy Magnetizer requires the following libraries to run:
