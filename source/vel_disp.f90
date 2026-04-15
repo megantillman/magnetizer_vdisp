@@ -36,17 +36,19 @@ module vel_disp
   
 contains 
   subroutine calc_v_kms(Mgas_disk, r_disk, v_disk, SFR, p_ISM_sound_speed_km_s, v_kms)
-  
+
+    ! function inputs from the main code
     double precision, intent(in) :: p_ISM_sound_speed_km_s
     double precision, intent(in) :: Mgas_disk, r_disk, v_disk, SFR 
+
+    ! local variables
     double precision :: t_orb, t_disk, tsfmax
     double precision, dimension (nx) :: Sig_g, Sig_sf
-    double precision, dimension(nx), intent(inout) :: v_kms
-    
-    
     double precision, dimension(nx) :: sigma_g, sigma_sf
-    double precision ::  maxfac_g
+    double precision :: maxfac_g
     
+    ! function output, v_kms is an input to be consistent with the main code but is not affected by what is actually given to the subroutine
+    double precision, dimension(nx), intent(out) :: v_kms
     
     ! calc orbital time in Myrs
     t_orb = (2.0d0*pi*(r_disk*1000.0d0*pc)/(v_disk*kmps))/Myr
@@ -120,7 +122,7 @@ contains
     refpoint = 230.
   
     sigma_sf2 = CubicRootClose(a3, a2, a1, a0, refpoint, roots)
-    sigma_sf = real(sqrt(sigma_sf2))
+    sigma_sf = sqrt(sigma_sf2)
     
   end subroutine calc_sig_sf
 
