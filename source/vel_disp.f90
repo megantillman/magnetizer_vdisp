@@ -29,6 +29,7 @@ module vel_disp
   double precision, parameter :: kmps = 1d5
   double precision, parameter :: G=6.6743d-8
   double precision, parameter :: Msun=1.9891d33
+  double precision, parameter :: pi = 3.14159265358979d0
   
   ! make sure this can be called in the actual code
   public :: calc_v_kms  
@@ -48,28 +49,28 @@ contains
     
     
     ! calc orbital time in Myrs
-    t_orb = (2*3.14*(r_disk*1000.*pc)/(v_disk*kmps))/Myr
+    t_orb = (2.0d0*pi*(r_disk*1000.0d0*pc)/(v_disk*kmps))/Myr
     ! calc Sigma gas in Msun / pc^2
-    Sig_g = Mgas_disk/(3.14*(r_disk*1000.)**2)
+    Sig_g = Mgas_disk/(pi*(r_disk*1000.0d0)**2)
     ! calc t disk in seconds
-    t_disk = (r_disk*1000*pc)/(v_disk*kmps)
+    t_disk = (r_disk*1000.0d0*pc)/(v_disk*kmps)
     ! calc maximum star formation time scale in Myrs
-    tsfmax = (t_disk*(v_disk/200.)**alps/epsff)/Myr
+    tsfmax = (t_disk*(v_disk/200.0d0)**alps/epsff)/Myr
     
-    if ((sqrt(2.0*(1.0+beta)/(3.0*fgP*phimp))*8.0*epsff*fgQ/Q) .gt. (t_orb/tsfmax)) then
-      maxfac_g = sqrt(2.0*(1.0+beta)/(3.0*fgP*phimp))*8.0*epsff*fgQ/Q
+    if ((sqrt(2.0d0*(1.0d0+beta)/(3.0d0*fgP*phimp))*8.0d0*epsff*fgQ/Q) .gt. (t_orb/tsfmax)) then
+      maxfac_g = sqrt(2.0d0*(1.0d0+beta)/(3.0d0*fgP*phimp))*8.0d0*epsff*fgQ/Q
     else
       maxfac_g = t_orb/tsfmax
     endif
     
     ! calc the turbulent velocity for the non SF supported case
-    sigma_g = ((SFR*Msun/yr)*(3.14*G*Q)/sqrt(2.0/(1.0+beta))/maxfac_g/ (phia*fsf*fgQ*(v_disk*kmps)**2))/kmps
+    sigma_g = ((SFR*Msun/yr)*(pi*G*Q)/sqrt(2.0d0/(1.0d0+beta))/maxfac_g/ (phia*fsf*fgQ*(v_disk*kmps)**2))/kmps
     
     ! calc the turbulent velocity for the SF supported case
     call calc_sig_sf(p_ISM_sound_speed_km_s, sigma_sf, t_orb, tsfmax)
     
     ! calc approximately the gas surface density to see which turb vel to use
-    Sig_sf = sqrt(2.0*(1.0+beta)) * (2.0*3.14/(t_orb*Myr)) * sigma_sf * kmps / (3.14*G*(Q/fgQ)) / (Msun/pc**2)
+    Sig_sf = sqrt(2.0d0*(1.0d0+beta)) * (2.0d0*pi/(t_orb*Myr)) * sigma_sf * kmps / (pi*G*(Q/fgQ)) / (Msun/pc**2.0d0)
     
     ! check if we can support via SF or through SF and mass transport
     if (Sig_g(nx) .gt. Sig_sf(nx) .and. sigma_g(1) .gt. sigma_sf(1)) then
@@ -80,13 +81,13 @@ contains
     
     ! this prevents zeros which make a nan later and causes the code to fail
     ! this probably isn't needed anymore since I implemented the sig_g > sig_sf condition
-    if (v_kms(1) .lt. 10.) then
-      v_kms = v_kms*0.+10.
+    if (v_kms(1) .lt. 10.0d0) then
+      v_kms = 10.0d0
     endif
     
     ! cap the velocity to somthing physical?
-    if (v_kms(1) .gt. 200.) then
-      v_kms = v_kms*0.+200.
+    if (v_kms(1) .gt. 200.0d0) then
+      v_kms = 200.0d0
     endif
     
   end subroutine calc_v_kms
@@ -110,7 +111,7 @@ contains
     if (fac1 .lt. 1.0) then
       fac1=1.0
     endif
-    fac=4.0*fac1*fsf*epsff*pmstar/(sqrt(3.0*fgP)*3.14*eta*phimp*phiQ)
+    fac=4.0*fac1*fsf*epsff*pmstar/(sqrt(3.0*fgP)*pi*eta*phimp*phiQ)
     
     a3=1.0
     a2=-(3.0*p_ISM_sound_speed_km_s**2+fac**2)
