@@ -6,27 +6,27 @@ module vel_disp
   private
 
   ! defining constants to be used in this calculation
-  double precision, parameter :: epsff=0.005
-  double precision, parameter :: alps=-1.5
-  double precision, parameter :: phia=2.0
+  double precision, parameter :: epsff=0.005d0
+  double precision, parameter :: alps=-1.5d0
+  double precision, parameter :: phia=2.0d0
   
-  double precision, parameter :: fsf=0.5
-  double precision, parameter :: fgP=0.5
-  double precision, parameter :: fgQ=0.5
-  double precision, parameter :: Q=1.0
+  double precision, parameter :: fsf=0.5d0
+  double precision, parameter :: fgP=0.5d0
+  double precision, parameter :: fgQ=0.5d0
+  double precision, parameter :: Q=1.0d0
   
-  double precision, parameter :: beta=0.0
-  double precision, parameter :: eta=1.5
-  double precision, parameter :: pmstar=3d3
-  double precision, parameter :: sigma_sf_fix=0.0
-  double precision, parameter :: phimp=1.4
-  double precision, parameter :: phint=0.0
-  double precision, parameter :: phiQ=2.0
+  double precision, parameter :: beta=0.0d0
+  double precision, parameter :: eta=1.5d0
+  double precision, parameter :: pmstar=3.0d3
+  double precision, parameter :: sigma_sf_fix=0.0d0
+  double precision, parameter :: phimp=1.4d0
+  double precision, parameter :: phint=0.0d0
+  double precision, parameter :: phiQ=2.0d0
   
   double precision, parameter :: pc=3.0856776d18
   double precision, parameter :: yr=365.25d0*24.0d0*3600.0d0
   double precision, parameter :: Myr=1.0d6*yr
-  double precision, parameter :: kmps = 1d5
+  double precision, parameter :: kmps = 1.0d5
   double precision, parameter :: G=6.6743d-8
   double precision, parameter :: Msun=1.9891d33
   double precision, parameter :: pi = 3.14159265358979d0
@@ -113,7 +113,7 @@ contains
     !subroutine output
     double precision, dimension(nx), intent(out):: sigma_sf
     
-    fac1=sqrt(3.0d0*fgP/(8.0d0*(1.0d0+beta)))*Q*phimp/(4*fgQ*epsff)*t_orb/tsfmax
+    fac1=sqrt(3.0d0*fgP/(8.0d0*(1.0d0+beta)))*Q*phimp/(4.0d0*fgQ*epsff)*t_orb/tsfmax
     if (fac1 .lt. 1.0d0) then
       fac1=1.0d0
     endif
