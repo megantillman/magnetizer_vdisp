@@ -20,7 +20,7 @@ module vel_disp
   double precision, parameter :: pmstar=3d3
   double precision, parameter :: sigma_sf_fix=0.0
   double precision, parameter :: phimp=1.4
-  double precision :: phint=0.0
+  double precision, parameter :: phint=0.0
   double precision, parameter :: phiQ=2.0
   
   double precision, parameter :: pc=3.0856776d18
